@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(void)
 {
@@ -16,7 +17,14 @@ int main(void)
             break;
         }
 
-        printf("你输入了：%s", line);
+        char *token = strtok(line, " \t\r\n");
+        int index = 0;
+
+        while (token != NULL) {
+            printf("第 %d 项：%s\n", index, token);
+            index++;
+            token = strtok(NULL, " \t\r\n");
+        }
     }
 
     free(line);
