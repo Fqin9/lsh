@@ -17,14 +17,28 @@ int main(void)
             break;
         }
 
+        char *args[64];
+        int argc = 0;
         char *token = strtok(line, " \t\r\n");
-        int index = 0;
 
-        while (token != NULL) {
-            printf("第 %d 项：%s\n", index, token);
-            index++;
+        while (token != NULL && argc < 63) {
+            args[argc] = token;
+            argc++;
             token = strtok(NULL, " \t\r\n");
         }
+
+        args[argc] = NULL;
+
+        if (token != NULL) {
+            fprintf(stderr, "lsh: 最多支持 63 项（包含命令名）\n");
+            continue;
+        }
+
+        for (int i = 0; i < argc; i++) {
+            printf("args[%d] = %s\n", i, args[i]);
+        }
+
+        printf("共 %d 项，args[%d] = NULL\n", argc, argc);
     }
 
     free(line);
